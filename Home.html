@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+.column1 {
+  float: left;
+  width: 70%;
+  padding: 10px;
+  height: 500px;
+}
+.column2 {
+  float: left;
+  width: 30%;
+  padding: 10px;
+  height: 500px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+h1 {text-align: center; color:black;}
+ #footer {
+            position: fixed;
+            padding: 10px 10px 0px 10px;
+            bottom: 0;
+            width: 100%;
+          
+            height: 40px;
+            background: grey;
+        }
+
+</style>'
+<title> React Page </title>
+<script src="https://fb.me/react-15.1.0.js"></script>
+<script src="https://fb.me/react-dom-15.1.0.js"></script>
+
+</head>
+<body>
+<div >
+
+	<h1>Pace University</h1>
+	
+</div>
+
+<div class="row">
+ 
+  <div class="column1" id='content' >
+    <table id='3blogs' cellpadding='10px' style="text-align:left;">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Author</th>
+                    <th>Summary</th>
+                </tr>                
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>	
+	
+ <script>
+        let xmlContent = '';
+        let tablePosts = document.getElementById('3blogs');
+        fetch('3blogs.xml').then((response)=> {
+            response.text().then((xml)=>{
+                xmlContent = xml;
+
+                let parser = new DOMParser();
+                let xmlDOM = parser.parseFromString(xmlContent, 'application/xml');
+                let posts = xmlDOM.querySelectorAll('post');
+
+                posts.forEach(postXmlNode => {
+
+                    let row = document.createElement('tr');
+
+                    //title
+                    let td = document.createElement('td');
+                    td.innerText = postXmlNode.children[0].innerHTML;
+                    row.appendChild(td);
+
+                    //  date
+                    td = document.createElement('td');
+                    td.innerText = postXmlNode.children[1].innerHTML;
+                    row.appendChild(td);
+                    
+                    //author
+                    td = document.createElement('td');
+                    td.innerText = '$ ' + postXmlNode.children[2].innerHTML;
+                    row.appendChild(td);
+
+                    //summary
+                    td = document.createElement('td');
+                    td.innerText = postXmlNode.children[3].innerHTML;
+                    row.appendChild(td);
+
+                    tablePosts.children[1].appendChild(row);
+                    
+                });
+                
+            });
+        });    
+    </script>
+      </div>
+  <div class="column2" style="background-color:#aaa;">
+    <h2>Nav</h2>
+    <nav>
+			<a href="Home.html">Home</a>
+			<BR>
+	
+	
+	<script type="text/javascript">
+
+function newAjax(){
+      var xmlhttp=false;
+      try {
+         xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+      } catch (e) {
+         try {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+         } catch (E) {
+            xmlhttp = false;
+         }
+      }
+      if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
+         xmlhttp = new XMLHttpRequest();
+      }
+   return xmlhttp;
+}  
+
+function gettweets(){
+
+      ajax = newAjax();
+
+     ajax.open( 'GET', 'http://search.twitter.com/search.json?q=%23search_word&rpp=10', true);
+
+    
+      ajax.onreadystatechange = function() {
+         if( ajax.readyState == 4 ) {
+            if ( ajax.status ==200 ) {  
+        res = ajax.responseText;
+        searchres = eval("(" + res + ")");
+
+        resdiv = document.getElementById("result");
+        for(i=0;i<5;i++){
+            resdiv.innerHTML += searchres.results[i].from_user+' says:<BR>'+searchres.results[i].text+'<BR><BR>';
+        }
+
+
+            }
+         }
+      }
+
+    ajax.send(null);
+}  
+
+</script>
+
+
+## Click on the search button for Tweets
+<input type="button" onclick="gettweets();"value="search" />
+<div id="result">
+<BR>
+</div>
+	
+	</nav>
+
+  </div>
+ 
+</div>
+
+	<div id="footer">Copyright © HelloWord.com
+	</div>
+ 
+ 
+</body>
+</html>
